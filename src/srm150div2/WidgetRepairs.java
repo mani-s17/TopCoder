@@ -8,19 +8,28 @@ package srm150div2;
  */
 public class WidgetRepairs
 {
-
 	public int days(int[] arrivals, int numPerDay)
 	{
 		int sum = 0;
-		for (int arrival : arrivals)
+		int balance = 0;
+		for (int i=0; i<arrivals.length; i++)
 		{
-			if (arrival < numPerDay && arrival != 0)
-				sum += 1;
-			else
+			balance = balance+arrivals[i];
+			if (balance != 0)
 			{
-				sum += arrival/numPerDay;
-				sum += (arrival%numPerDay < numPerDay && arrival%numPerDay != 0) ? 1 : 0;
+				sum++;
+				if (balance > numPerDay)
+					balance = balance - numPerDay;
+				else
+					balance = 0;
 			}
+		}
+
+		if (balance != 0)
+		{
+			sum += balance/numPerDay;
+			if (balance%numPerDay != 0)
+				sum++;
 		}
 		return sum;
 	}
@@ -34,5 +43,6 @@ public class WidgetRepairs
 		System.out.println(obj.days(new int[] { 100, 100 }, 10));
 		System.out.println(obj.days(new int[] { 27, 0, 0, 0, 0, 9 }, 9));
 		System.out.println(obj.days(new int[] { 6, 5, 4, 3, 2, 1, 0, 0, 1, 2, 3, 4, 5, 6 }, 3));
+		System.out.println(obj.days(new int[] { 100 }, 3));
 	}
 }
